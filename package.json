@@ -1,0 +1,17 @@
+{
+  "name": "logviewernode",
+  "version": "0.0.1",
+  "description": "Log Viewwer for service calls from Mobile apps",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "console",
+    "filesystem",
+    "network",
+    "files"
+  ],
+  "author": "Rahul Gautam",
+  "license": "MIT"
+}
