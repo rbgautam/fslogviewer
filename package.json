@@ -3,10 +3,9 @@
   "version": "0.0.1",
   "description": "Log Viewwer for service calls from Mobile apps",
   "main": "index.js",
-  
   "scripts": {
     "test": "test",
-    "start": "node src/index.js"
+    "start": "babel-node src/index.js"
   },
   "keywords": [
     "console",
@@ -15,5 +14,17 @@
     "files"
   ],
   "author": "Rahul Gautam",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "webpack": "^4.29.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^8.0.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0"
+  }
 }
