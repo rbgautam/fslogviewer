@@ -6,7 +6,7 @@ import readline from 'readline'
 let logDirPath = '\\\\iaai.com\\EnterpriseServices\\IAATow\\QA\\IAATowMobilityWebService\\';
 //Pick the latest File
 
-let prevFileName = 'Application_IAATow_MobilityService-636888670580483456.log';//'Application_IAATow_MobilityService-636885977630999551.log'; 
+let prevFileName = '';//'Application_IAATow_MobilityService-636885977630999551.log'; 
 let currFileName = '';
 let prevFileLineCount = 0;
 let currFileLineCount = 0;
@@ -70,7 +70,6 @@ const DisplayLogContent = ()=>{
         ReadFileLength(logDirPath+currFileName);
     }
     
-    
 };
 
 const readFullLog = () => {
@@ -81,6 +80,7 @@ const readFullLog = () => {
         else
             console.log(chalk.greenBright(data.toString()));
     });
+    prevFileName = currFileName;
 };
 
 const  readLinesFromLog = async ()=>{
@@ -121,24 +121,30 @@ const ReadFileLines = ()=>{
             console.log(err);
         }else{
             data = data.split("\r\n"); // split the document into lines
-            let linesToRead = currFileLineCount - prevFileLineCount;
-            linesToRead = 10;
-            data.length = 10;    // set the total number of lines to 10
+            let linesToRead = 0;
+            if (currFileLineCount != prevFileLineCount){
+                linesToRead = currFileLineCount - prevFileLineCount;
+                prevFileLineCount = currFileLineCount;
+            }
+            else 
+                linesToRead = 20;
+            //data.length = linesToRead;    // set the total number of lines to 10
+            let lastLines = data.slice(-1*linesToRead); 
             //TODO: Read last # of lines
-            console.log(data); //Array containing the 10 lines
+            console.log(data); //Array containing the lines to read
         }
       });
 }
 
-//let logReadTimer = setInterval(ReadDirlist,2000);
+
 let timerCount = 0;
 function intervalFunc() {
     timerCount++;
     ReadDirlist();
-    if (timerCount == '5') {
-      clearInterval(this);
-    }
+    // if (timerCount == '5') {
+    //   clearInterval(this);
+    // }
 }
-setImmediate(intervalFunc);
+
 setInterval(intervalFunc, 2000);
 
