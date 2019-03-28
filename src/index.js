@@ -1,5 +1,5 @@
 import fs from 'fs'
-
+import chalk from 'chalk'
 //console.log('Hello fslogger');
 
 //Get File list fomr directory
@@ -17,8 +17,7 @@ fs.readFileSync(logDirPath+prevFileName,'utf-8');
 let fileList= [];
 fs.readdir(logDirPath, (err, files) => {
   files.forEach(file => {
-    //console.log(file);
-    fileList.push(file);
+     fileList.push(file);
   });
   currFileName = getNewestFile(fileList,logDirPath);
   currFileLineCount = ReadFileLength(logDirPath+currFileName);
@@ -44,7 +43,6 @@ function getNewestFile(files, path) {
 const ReadFileLength = (filePath) =>{
     var i;
     var count = 0;
-    //console.log(filePath);
     fs.createReadStream(filePath)
     .on('data', function(chunk) {
         for (i=0; i < chunk.length; ++i)
@@ -60,8 +58,27 @@ const ReadFileLength = (filePath) =>{
 
 const DisplayLogContent = ()=>{
     console.log(currFileName);
-    //if Lastest file not in the prevfileName then read whole file
-    //Else if Latestfilename equals prevFileName then  currcount - lastcount
+    //if Lastest file not same as the prevfileName then read whole file
+    if(prevFileName !== currFileName){
+        readFullLog();
+    }else{
+        //Else if Latestfilename equals prevFileName then  currcount - lastcount
+        readLinesFromLog();
+    }
+    
+    
 };
 
+const readFullLog = () => {
+    fs.readFile(logDirPath+currFileName, function(err,data)
+    {
+        if(err)
+            console.log(err)
+        else
+            console.log(chalk.greenBright(data.toString()));
+    });
+};
 
+const readLinesFromLog = ()=>{
+    console.log('Lines from log');
+};
