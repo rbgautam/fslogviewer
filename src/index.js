@@ -7,6 +7,9 @@ let logDirPath = '\\\\iaai.com\\EnterpriseServices\\IAATow\\QA\\IAATowMobilityWe
 //Pick the latest File
 
 let prevFileName = 'Application_IAATow_MobilityService-636885977630999551.log'; 
+let currFileName = '';
+let prevFileLineCount = 0;
+let currFileLineCount = 0;
 
 fs.readFileSync(logDirPath+prevFileName,'utf-8');
 
@@ -17,9 +20,9 @@ fs.readdir(logDirPath, (err, files) => {
     //console.log(file);
     fileList.push(file);
   });
-  var fileLatest = getNewestFile(fileList,logDirPath);
-  console.log(fileLatest);
-  ReadFileLength(logDirPath+fileLatest);
+  currFileName = getNewestFile(fileList,logDirPath);
+  currFileLineCount = ReadFileLength(logDirPath+currFileName);
+  DisplayLogContent();
 });
 
 //Store latest file name and # of lines
@@ -41,7 +44,7 @@ function getNewestFile(files, path) {
 const ReadFileLength = (filePath) =>{
     var i;
     var count = 0;
-    
+    //console.log(filePath);
     fs.createReadStream(filePath)
     .on('data', function(chunk) {
         for (i=0; i < chunk.length; ++i)
@@ -49,12 +52,16 @@ const ReadFileLength = (filePath) =>{
     })
     .on('end', function() {
         console.log(count);
+        return count;
     });
 
 };
 
-//if Lastest file not in the prevfileName then read whole file
+
+const DisplayLogContent = ()=>{
+    console.log(currFileName);
+    //if Lastest file not in the prevfileName then read whole file
+    //Else if Latestfilename equals prevFileName then  currcount - lastcount
+};
 
 
-
-//Else if Latestfilename equals prevFileName then  
